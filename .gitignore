@@ -1,0 +1,39 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment folders
+env/
+venv/
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore other IDE-specific files
+.idea/
+
+# Ignore logs
+*.log
+
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore Python distribution and packaging files
+*.egg
+*.egg-info
+dist/
+build/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore test results
+nosetests.xml
+coverage.xml
+*.cover
+*.hypothesis/
+*.tox/
+
