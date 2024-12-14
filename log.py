@@ -1,8 +1,10 @@
+from datetime import datetime
+
 class Log:
     # This class implements the the log entries. Stores details like timestamp, event_type, source_ip, and destination_ip.
     # This should let us manage the data better.
     def __init__(self, timestamp, event_type, source_ip, destination_ip):
-        self.timestamp = timestamp
+        self.timestamp = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
         self.event_type = event_type
         self.source_ip = source_ip
         self.destination_ip = destination_ip
