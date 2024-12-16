@@ -49,3 +49,48 @@ class LogAnalyzer:
                     break
 
         return sus_ips
+    
+    
+class SeverityAssessor:
+    # This class assigns severity levels (low, medium, high) to detected attacks based on the number of affected IPs
+    def assess_severity(self, brute_force_ips, dos_ips):
+        severity = {}
+        
+        #determine severity level by checking how many IPs are invloved and then assigns a level
+        if len(brute_force_ips) > 3 or len(dos_ips) > 3:
+            severity_level = "high"
+        elif len(brute_force_ips) > 1 or len(dos_ips) > 1:
+            severity_level = "medium"
+        else:
+            severity_level = "low"
+        
+        # Assign severity levels to detected attack types
+        if brute_force_ips:
+            severity["BruteForce"] = severity_level
+        if dos_ips:
+            severity["DoS"] = severity_level
+        return severity
+    
+
+class ResponseDecider:
+    # This class recommends actions based on the severity of the detected attacks
+    def recommend_actions(self, severity_assessment):
+        actions = {}
+        #Method that cycles through attack types and their severity and reccomends actions based on that info
+        for attack_type, severity in severity_assessment.items():
+            if severity == "high":
+                actions[attack_type] = "Isolate System"
+            elif severity == "medium":
+                actions[attack_type] = "Investigate Logs"
+            else:
+                actions[attack_type] = "Monitor Activity"
+        
+        # Return recommended actions for each attack type
+        return actions
+    
+
+class AlertSystem:
+    # This class sends alerts notifing operator about the detected attacks and the determined suggested actions
+    def send_alert(self, actions):
+        for attack_type, action in actions.items():
+            print(f"ALERT: {attack_type} detected. Recommended action: {action}")

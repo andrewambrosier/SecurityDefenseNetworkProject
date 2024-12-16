@@ -1,5 +1,5 @@
 from log import Log
-from log_analyzer import LogAnalyzer
+from log_analyzer import LogAnalyzer, SeverityAssessor, ResponseDecider, AlertSystem
 
 def main():
     # Create Log objects
@@ -40,6 +40,19 @@ def main():
     dos_ips = analyzer.detect_dos_attacks()
     print(f"Potential DoS from IPs: {dos_ips}")
     
+    # Assess severity of attacks
+    assessor = SeverityAssessor()
+    severity = assessor.assess_severity(attacks, dos_ips)
+    print(f"Severity assessment: {severity}")
+
+    # Recommend actions based on severity
+    decider = ResponseDecider()
+    actions = decider.recommend_actions(severity)
+    print(f"Recommended actions: {actions}")
+
+    # Send alerts
+    alert_system = AlertSystem()
+    alert_system.send_alert(actions)
 
 if __name__ == "__main__":
     main()
