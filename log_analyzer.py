@@ -55,21 +55,25 @@ class SeverityAssessor:
     # This class assigns severity levels (low, medium, high) to detected attacks based on the number of affected IPs
     def assess_severity(self, brute_force_ips, dos_ips):
         severity = {}
-        
-        #determine severity level by checking how many IPs are invloved and then assigns a level
-        if len(brute_force_ips) > 3 or len(dos_ips) > 3:
-            severity_level = "high"
-        elif len(brute_force_ips) > 1 or len(dos_ips) > 1:
-            severity_level = "medium"
-        else:
-            severity_level = "low"
-        
-        # Assign severity levels to detected attack types
-        if brute_force_ips:
-            severity["BruteForce"] = severity_level
-        if dos_ips:
-            severity["DoS"] = severity_level
+
+        # Determine severity level for brute force attacks
+        if len(brute_force_ips) > 3:
+            severity["BruteForce"] = "high"
+        elif len(brute_force_ips) > 1:
+            severity["BruteForce"] = "medium"
+        elif brute_force_ips:  # At least one IP
+            severity["BruteForce"] = "low"
+
+        # Determine severity level for DoS attacks
+        if len(dos_ips) > 3:
+            severity["DoS"] = "high"
+        elif len(dos_ips) > 1:
+            severity["DoS"] = "medium"
+        elif dos_ips:  # At least one IP
+            severity["DoS"] = "low"
+
         return severity
+
     
 
 class ResponseDecider:
