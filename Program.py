@@ -27,6 +27,12 @@ def main():
         Log("2024-12-01 10:00:12", "failed_login", "192.168.1.3", "192.168.1.1"),
         Log("2024-12-01 10:00:13", "failed_login", "192.168.1.3", "192.168.1.1"),
         Log("2024-12-01 10:00:14", "failed_login", "192.168.1.3", "192.168.1.1"),
+        # Adding more failed login attempts to exceed the high threat threshold
+        Log("2024-12-01 10:00:10", "failed_login", "192.168.1.4", "192.168.1.1"),
+        Log("2024-12-01 10:00:11", "failed_login", "192.168.1.4", "192.168.1.1"),
+        Log("2024-12-01 10:00:12", "failed_login", "192.168.1.4", "192.168.1.1"),
+        Log("2024-12-01 10:00:13", "failed_login", "192.168.1.4", "192.168.1.1"),
+        Log("2024-12-01 10:00:14", "failed_login", "192.168.1.4", "192.168.1.1")
     ]
 
     
@@ -34,15 +40,15 @@ def main():
     analyzer = LogAnalyzer(logs)
     
     # Detect attacks
-    attacks = analyzer.detect_brute_force()
-    print(f"Brute force detected from IPs: {attacks}")
+    brute_attacks = analyzer.detect_brute_force()
+    print(f"Brute force detected from IPs: {brute_attacks}")
 
     dos_ips = analyzer.detect_dos_attacks()
     print(f"Potential DoS from IPs: {dos_ips}")
     
     # Assess severity of attacks
     assessor = SeverityAssessor()
-    severity = assessor.assess_severity(attacks, dos_ips)
+    severity = assessor.assess_severity(brute_attacks, dos_ips)
     print(f"Severity assessment: {severity}")
 
     # Recommend actions based on severity
